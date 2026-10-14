@@ -72,14 +72,15 @@ public class SwitchDuplicateLogicCheck extends AbstractCheck {
 
     private List<DetailAST> extractMeaningfulStatements(DetailAST caseGroupNode) {
         List<DetailAST> statements = new ArrayList<>();
-        DetailAST child = caseGroupNode.getFirstChild();
+        DetailAST statementList = caseGroupNode.findFirstToken(TokenTypes.SLIST);
+        if (statementList == null) {
+            return statements;
+        }
+
+        DetailAST child = statementList.getFirstChild();
         
         while (child != null) {
-            int type = child.getType();
-            // Case labels aur boilerplate/terminal statements ko chhod kar baaki sab lo
-            if (type != TokenTypes.LITERAL_CASE && 
-                type != TokenTypes.LITERAL_DEFAULT && 
-                !isBoilerplateOrTerminal(child)) {
+            if (!isBoilerplateOrTerminal(child)) {
                 statements.add(child);
             }
             child = child.getNextSibling();

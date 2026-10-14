@@ -1,4 +1,4 @@
-﻿package com.example.Checkstyle.Switch.Analyzer.checkstyle;
+package com.example.Checkstyle.Switch.Analyzer.checkstyle;
 
 public class InputDuplicateSwitchBranchCheck {
     public void process(int type, int price) {
